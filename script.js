@@ -9,6 +9,16 @@ buttons.forEach((item) => {
     });
 });
 
+document.addEventListener('keydown', (event) => {
+    const keyPressed = event.key;
+
+    if (/[0-9+\-*/().=]|Enter|Backspace|Escape/.test(keyPressed)) {
+        handleButtonClick(keyPressed);
+    }
+
+    event.preventDefault();
+});
+
 function handleButtonClick(buttonId) {
     switch (buttonId) {
         case 'clear':
@@ -18,7 +28,11 @@ function handleButtonClick(buttonId) {
             removeLastCharacter();
             break;
         case 'equal':
+        case 'Enter':
             evaluateExpression();
+            break;
+        case 'Escape':
+            clearEquation();
             break;
         default:
             appendToDisplay(buttonId);
@@ -54,6 +68,10 @@ function calculate(expression) {
 
 function appendToDisplay(value) {
     display.innerText += value;
+}
+
+function clearEquation() {
+    display.innerText = '';
 }
 
 themeToggleBtn.addEventListener('click', toggleTheme);
